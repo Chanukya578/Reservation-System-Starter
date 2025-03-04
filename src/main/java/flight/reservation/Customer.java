@@ -2,6 +2,9 @@ package flight.reservation;
 
 import flight.reservation.flight.ScheduledFlight;
 import flight.reservation.order.FlightOrder;
+import flight.reservation.order.FlightOrderBuilder;
+import flight.reservation.order.FlightOrderDirector;
+import flight.reservation.order.ConcreteFlightOrderBuilder;
 import flight.reservation.order.Order;
 
 import java.util.ArrayList;
@@ -24,16 +27,12 @@ public class Customer {
         if (!isOrderValid(passengerNames, flights)) {
             throw new IllegalStateException("Order is not valid");
         }
-        FlightOrder order = new FlightOrder(flights);
-        order.setCustomer(this);
-        order.setPrice(price);
-        List<Passenger> passengers = passengerNames
-                .stream()
-                .map(Passenger::new)
-                .collect(Collectors.toList());
-        order.setPassengers(passengers);
-        order.getScheduledFlights().forEach(scheduledFlight -> scheduledFlight.addPassengers(passengers));
-        orders.add(order);
+
+        FlightOrderBuilder builder = new ConcreteFlightOrderBuilder(flights);
+        FlightOrderDirector director = new FlightOrderDirector(builder);
+        director.construct(this, passengerNames, price);
+
+        FlightOrder order = ((ConcreteFlightOrderBuilder) builder).build();        orders.add(order);
         return order;
     }
 
