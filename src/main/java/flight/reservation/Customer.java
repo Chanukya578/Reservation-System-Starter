@@ -32,7 +32,8 @@ public class Customer {
         FlightOrderDirector director = new FlightOrderDirector(builder);
         director.construct(this, passengerNames, price);
 
-        FlightOrder order = ((ConcreteFlightOrderBuilder) builder).build();        orders.add(order);
+        FlightOrder order = ((ConcreteFlightOrderBuilder) builder).build();       
+        orders.add(order);
         return order;
     }
 
