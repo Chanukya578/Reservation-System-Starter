@@ -31,13 +31,13 @@ public class ScheduledFlight extends Flight {
 
     public int getCrewMemberCapacity() throws NoSuchFieldException {
         if (this.aircraft instanceof PassengerPlane) {
-            return ((PassengerPlane) this.aircraft).crewCapacity;
+            return ((PassengerPlane) this.aircraft).getCrewCapacity();
         }
         if (this.aircraft instanceof Helicopter) {
-            return 2;
+            return ((Helicopter) this.aircraft).getCrewCapacity();
         }
         if (this.aircraft instanceof PassengerDrone) {
-            return 0;
+            return ((PassengerDrone) this.aircraft).getCrewCapacity();
         }
         throw new NoSuchFieldException("this aircraft has no information about its crew capacity");
     }
@@ -52,13 +52,13 @@ public class ScheduledFlight extends Flight {
 
     public int getCapacity() throws NoSuchFieldException {
         if (this.aircraft instanceof PassengerPlane) {
-            return ((PassengerPlane) this.aircraft).passengerCapacity;
+            return ((PassengerPlane) this.aircraft).getPassengerCapacity();
         }
         if (this.aircraft instanceof Helicopter) {
             return ((Helicopter) this.aircraft).getPassengerCapacity();
         }
         if (this.aircraft instanceof PassengerDrone) {
-            return 4;
+            return ((PassengerDrone) this.aircraft).getPassengerCapacity();
         }
         throw new NoSuchFieldException("this aircraft has no information about its capacity");
     }
